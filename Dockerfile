@@ -9,16 +9,16 @@ RUN apt-get update && apt-get install -y  \
 	rsync \
 	wget
 #jdbc:sqlserver://${sqlsrv_name}.database.windows.net:1433;database=${sqldb_name};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
-ARG sqlsrv_name
-ARG sqldb_name
-ARG UserSQL
-ARG PassSQL
+ARG sqlsrvname
+ARG sql_dbname
+ARG usersql
+ARG passsql
 
-ENV user userhive \
-    sqlsrv_name=$sqlsrv_name \
-    sqldb_name=$sqldb_name \
-	sqluser=$UserSQL \
-    sqlpass=$PassSQL \
+ENV user userhive
+ENV sqlsrv=$sqlsrvname
+ENV sqldb=$sql_dbname
+ENV	sqluser=$usersql
+ENV sqlpass=$passsql
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64 
 ENV PATH $PATH:$JAVA_HOME/bin:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
 RUN apt-get clean
@@ -35,7 +35,7 @@ ENV HADOOP_YARN_HOME $HADOOP_HOME
 ENV HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
 ENV HADOOP_PREFIX $HADOOP_HOME
 ENV PATH $PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
-RUN sed -i '/^export JAVA_HOME/export JAVA_HOME=${JAVA_HOME}\nexport HADOOP_HOME=${HADOOP_HOME}\nexport HADOOP_PREFIX=${HADOOP_PREFIX}:' ${HADOOP_HOME}/etc/hadoop/hadoop-env.sh
+RUN sed -i '/export JAVA_HOME/export JAVA_HOME=${JAVA_HOME}\nexport HADOOP_HOME=${HADOOP_HOME}\nexport HADOOP_PREFIX=${HADOOP_PREFIX}:' ${HADOOP_HOME}/etc/hadoop/hadoop-env.sh
 # Default Conf Files
 #ADD config/* $HADOOP_HOME/etc/hadoop/
 #RUN sed -i "/^export JAVA_HOME/ s:.*:export JAVA_HOME=${JAVA_HOME}\nexport HADOOP_HOME=${HADOOP_HOME}\nexport HADOOP_PREFIX=${HADOOP_PREFIX}:" ${HADOOP_HOME}/etc/hadoop/hadoop-env.sh
@@ -52,10 +52,10 @@ ADD sqljdbc42.jar $HIVE_HOME/lib \
 ADD hive-site.xml $HIVE_HOME/conf \
 ADD hive-env.sh $HIVE_HOME/conf
 RUN chmod +x $HIVE_HOME/conf/hive-env.sh
-RUN sed -i 's/sqlsrv_name/${sqlsrv_name}' $HIVE_HOME/conf/hive-site.xml
-RUN sed -i 's/sqldb_name/${sqldb_name}' $HIVE_HOME/conf/hive-site.xml
-RUN sed -i 's/sqluser/${sqluser}' $HIVE_HOME/conf/hive-site.xml
-RUN sed -i 's/sqlpass/${sqlpass}' $HIVE_HOME/conf/hive-site.xml
+RUN sed -i '/sqlsrv_name/${sqlsrv}' $HIVE_HOME/conf/hive-site.xml
+#RUN sed -i 's/sqldb_name/${sqldb_name}' $HIVE_HOME/conf/hive-site.xml
+#RUN sed -i 's/sqluser/${sqluser}' $HIVE_HOME/conf/hive-site.xml
+#RUN sed -i 's/sqlpass/${sqlpass}' $HIVE_HOME/conf/hive-site.xml
 #User: userhive
 RUN useradd -m -d /${user} ${user} && \
     chown -R ${user} /${user} && \

@@ -16,10 +16,17 @@ docker service create \
 	--mount type=bind,source=/etc/localtime,target=/etc/localtime \
 	newnius/hive:2.3.3
 ```
-#### Init MetaStore -- Previous step for start this command, put the correct connection string in the file "hive-site.xml"
+#### Init MetaStore
 
 ```bash
-schematool --dbType mssql --initSchema
+docker run \
+-e sql_srv=hive-metastore-srv \
+-e sql_dbs=hive-metastore-db \
+-e sqluser=sqladmin \
+-e sqlpass=.Laliga2019. \
+ubuntutest
+schematool -dbType mssql -initSchema
+
 ```
 
 #### Start MetaStore service

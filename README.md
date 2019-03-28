@@ -14,12 +14,12 @@ docker build -t ubuntu/hivehadoop -f Dockerfile .
 #### Init MetaStore
 
 ```bash
-docker run \
+docker run -it \
 -e sql_srv=MiServidorSQL \
 -e sql_dbs=MiBBDD_SQL \
 -e sqluser=MiUsuarioSeguro \
 -e sqlpass=MiContraseñaSegura \
-ubuntu/hive_hadoop
+ubuntu/hivehadoop \
 schematool -dbType mssql -initSchema
 
 ```

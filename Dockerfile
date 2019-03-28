@@ -64,7 +64,7 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN chown -hR ${user} /usr/local/hadoop
 RUN chown -hR ${user} /usr/local/hive
 WORKDIR $HIVE_HOME
-ENTRYPOINT ["/conf/rep_hive-site.sh"]
+ENTRYPOINT ["./conf/rep_hive-site.sh"]
 
 #CMD [ "hive", "--version" ]
 #CMD ["schematool -dbType mssql -initSchema --verbose"]

@@ -1,0 +1,9 @@
+FROM ubuntu
+LABEL authors="Bluetab"
+ARG sqlsrvname
+ENV sqlsrv=$sqlsrvname
+RUN mkdir /hive
+ENV HIVE_HOME /hive
+ADD hive-site.xml $HIVE_HOME/
+ENTRYPOINT["sh","-C","sed -i '/sqlsrv_name/${sqlsrv}' $HIVE_HOME/hive-site.xml"]
+WORKDIR $HIVE_HOME

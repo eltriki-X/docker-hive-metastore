@@ -1,5 +1,5 @@
 FROM ubuntu:latest
-LABEL authors="Bluetab"
+LABEL authors="By Triki"
 #########################
 # Prerequisites
 RUN apt-get update && apt-get install -y  \

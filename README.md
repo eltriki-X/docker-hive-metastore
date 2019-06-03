@@ -1,6 +1,6 @@
 ##############################################################################
 
-Run Aapache Hive with Docker
+Run Apache Hive with Docker
 
 ## Prequirements
 
@@ -15,10 +15,10 @@ docker build -t ubuntu/hivehadoop -f Dockerfile .
 
 ```bash
 docker run -it \
--e sql_srv=MiServidorSQL \
--e sql_dbs=MiBBDD_SQL \
--e sqluser=MiUsuarioSeguro \
--e sqlpass=MiContraseñaSegura \
+-e sql_srv=MySQLServer \
+-e sql_dbs=MyDB\
+-e sqluser=MyUserName \
+-e sqlpass=MyPassword \
 ubuntu/hivehadoop \
 schematool -dbType mssql -initSchema
 
